@@ -28,5 +28,7 @@ O que é o jogo UNO:
     * Inverter: As 2 cartas de Inverter permitem que a direção do jogo mude. Se o jogo estava indo no sentido horário, passa a ir no sentido anti-horário e vice-versa. Essa carta pode criar estratégias interessantes, especialmente em grupos maiores.
     * Pular: Existem 2 cartas de Pular, que fazem com que o próximo jogador perca a sua vez. Essa carta é muito útil para impedir que um adversário jogue e continue avançando em sua estratégia.
     * Comprar Duas: Existem 2 cartas de Comprar Duas. Quando um jogador usa essa carta, o próximo deve comprar duas cartas e perde a vez. É uma forma eficiente de aumentar a competição e dificultar as jogadas dos oponentes.
+  
+  3) O vencedor é aquele que, após ter ficado com uma carta na mão e ter dito em voz alta UNO, conseguir descartar essa carta na pilha antes de todos os outros jogadores.
 
 Porque essa escolha: Por ser um jogo muito conhecido e divertido de se jogar, optamos por replicá-lo de maneira que possa ser jogado em nossos computadores sem que precise de uma baralho ou instalar um app, que, em alguns casos, é pago.
