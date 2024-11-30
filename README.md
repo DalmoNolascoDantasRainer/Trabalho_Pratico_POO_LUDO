@@ -13,14 +13,15 @@ Ao final do projeto, espera-se que os alunos:
 Para o desenvolvimento desse projeto utilizaremos a ferramenta Visual Studio Code, que é um editor de código aberto desenvolvido pela Microsoft.
 Além disso, haverá um versionamento do nosso código feito em Java pela ferramenta Git/Github.
 
-<h3>Sobre o projeto: Decidimos em concensso que iremos implementar um jogo de cartas comumente conhecido como UNO;</h3>
+Sobre o projeto: Decidimos em concensso que iremos implementar um jogo de cartas comumente conhecido como UNO;
 
-<h3>O que é o jogo UNO:</h3>
+O que é o jogo UNO:
  1) Cartas Numéricas: As cartas numéricas são as mais comuns no baralho de Uno. Existem quatro cores principais: vermelho, azul, verde e amarelo. Cada cor contém 19 cartas numéricas, que vão de 0 a 9.
     * Vermelho: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 (2 de cada número, exceto o 0, que tem 1)
     * Azul: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 (2 de cada número, exceto o 0, que tem 1)
     * Verde: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 (2 de cada número, exceto o 0, que tem 1)
     * Amarelo: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 (2 de cada número, exceto o 0, que tem 1)
+ 
  2) Cartas Especiais: Além das cartas numéricas, o baralho de Uno também contém cartas especiais que podem alterar o fluxo do jogo. Essas cartas são importantes para criar reviravoltas emocionantes e imprevisíveis.
     * Coringas Troca de cor: Existem 4 cartas Coringas, que permitem ao jogador escolher a cor que deseja jogar. Essa carta é extremamente poderosa, pois pode ser usada em qualquer momento do jogo, independentemente da cor ou número da carta anterior.
     * Coringas +4: Também existem 4 cartas Coringas +4. Quando um jogador coloca essa carta, o próximo jogador deve comprar quatro cartas e perde a vez. O jogador que usar essa carta também escolhe a nova cor que se começará a jogar. Essa carta só pode ser jogada        se o jogador não tiver cartas na cor que está em jogo.
@@ -28,4 +29,4 @@ Além disso, haverá um versionamento do nosso código feito em Java pela ferram
     * Pular: Existem 2 cartas de Pular, que fazem com que o próximo jogador perca a sua vez. Essa carta é muito útil para impedir que um adversário jogue e continue avançando em sua estratégia.
     * Comprar Duas: Existem 2 cartas de Comprar Duas. Quando um jogador usa essa carta, o próximo deve comprar duas cartas e perde a vez. É uma forma eficiente de aumentar a competição e dificultar as jogadas dos oponentes.
 
-###Porque essa escolha: Por ser um jogo muito conhecido e divertido de se jogar, optamos por replicá-lo de maneira que possa ser jogado em nossos computadores sem que precise de uma baralho ou instalar um app, que, em alguns casos, é pago.
+Porque essa escolha: Por ser um jogo muito conhecido e divertido de se jogar, optamos por replicá-lo de maneira que possa ser jogado em nossos computadores sem que precise de uma baralho ou instalar um app, que, em alguns casos, é pago.
