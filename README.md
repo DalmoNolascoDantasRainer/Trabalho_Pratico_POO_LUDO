@@ -13,7 +13,7 @@ Ao final do projeto, espera-se que os alunos:
 Para o desenvolvimento desse projeto utilizaremos a ferramenta Visual Studio Code, que é um editor de código aberto desenvolvido pela Microsoft.
 Além disso, haverá um versionamento do nosso código feito em Java pela ferramenta Git/Github.
 
-Sobre o projeto: Decidimos em concensso que iremos implementar um jogo de cartas comumente conhecido como UNO;
+Sobre o projeto: Decidimos em consenso que iremos implementar um jogo de cartas comumente conhecido como UNO;
 
 O que é o jogo UNO:
  1) Cartas Numéricas: As cartas numéricas são as mais comuns no baralho de Uno. Existem quatro cores principais: vermelho, azul, verde e amarelo. Cada cor contém 19 cartas numéricas, que vão de 0 a 9.
