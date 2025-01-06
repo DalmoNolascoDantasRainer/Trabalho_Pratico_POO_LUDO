@@ -14,4 +14,6 @@ public class Dado {
         System.out.println("Dado rolado: " + resultado);
         return resultado;
     }
+
+    
 }
