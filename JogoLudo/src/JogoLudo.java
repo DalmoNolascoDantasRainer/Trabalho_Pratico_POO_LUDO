@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class JogoLudo {
     private Tabuleiro tabuleiro;
     private ArrayList<Jogador> jogadores;

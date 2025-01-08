@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
-import Peao.Peao;
 
 public class Jogador {
     private String nome;
@@ -47,45 +45,42 @@ public class Jogador {
 
     // IMPLEMENTAR FUNÇÃO JOGAR
 
-    /**
+    /*
      * a lista de peoes não é alterada, apenas os valores
      * Função que realiza a jogada do jogador
      * recebe o dado ja rolado
      * verifica se o jogador pode retirar um peão da base
      * pergunta ao jogador qual peão ele deseja mover
+     * valor padrão de erro do peãoescolhido é -1
      */
-    public void jogar(int dado) {
-        Scanner scanner = new Scanner(System.in);
+    public void jogar(int dado, int peaoEscolhido) {
         int podeRetirar = 0;
-        int peaoEscolhido = -1;
         int referenciaSaida = 2;    
         if (dado == 6) {
             podeRetirar = 1;
         }
-        System.out.print("Digite o peao(0 a 3): ");
-        peaoEscolhido = scanner.nextInt();
 
         if (listaPeoes.get(peaoEscolhido).isEstaNaBase() && podeRetirar == 1) {
             listaPeoes.get(peaoEscolhido).setPosicaoAtual(0);
+            listaPeoes.get(peaoEscolhido).setEstaNaBase(false);
         } else {
-            for (int i = 0; i < dado; i++){
-                if ((listaPeoes.get(peaoEscolhido).getPosicaoAtual()) == referenciaSaida-2){
-                    
+            for (int i = 0; i < dado; i++){ // anda o dado de casas
+                if (((listaPeoes.get(peaoEscolhido).getPosicaoAtual()) == referenciaSaida-2) && listaPeoes.get(peaoEscolhido).isEstaNaTrilhaFinal() == false){
+                    listaPeoes.get(peaoEscolhido).setPosicaoAtual(0); 
+                    listaPeoes.get(peaoEscolhido).setEstaNaTrilhaFinal(true);                  
                 }
+                else if(listaPeoes.get(peaoEscolhido).isEstaNaTrilhaFinal() == true){
+                        listaPeoes.get(peaoEscolhido).setPosicaoAtual((listaPeoes.get(peaoEscolhido).getPosicaoAtual() + 1) % 6);
+                    }
                 else{
                     listaPeoes.get(peaoEscolhido).setPosicaoAtual((listaPeoes.get(peaoEscolhido).getPosicaoAtual() + 1) % 52);
-
                 }
                 
-        }
+            }
 
         }
 
     }
-
-
-
-
 
 }
 

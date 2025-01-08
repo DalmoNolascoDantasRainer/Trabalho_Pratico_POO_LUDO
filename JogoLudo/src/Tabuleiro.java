@@ -1,7 +1,4 @@
 import java.util.ArrayList;
-
-import Casas.Casa;
-import Casas.CasaFinal;
 public class Tabuleiro{
     private ArrayList<CasaFinal> listaTrilhaFinal;
     private ArrayList<Casa> listaCasas;

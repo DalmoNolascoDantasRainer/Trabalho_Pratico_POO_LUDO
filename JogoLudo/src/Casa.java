@@ -1,8 +1,8 @@
-package Casas;
+
 
 import java.util.ArrayList;
 
-import Peao.Peao;
+
 public class Casa {
 
     int posicao;

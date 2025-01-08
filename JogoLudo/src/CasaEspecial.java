@@ -1,8 +1,6 @@
-package Casas;
+
 
 import java.util.ArrayList;
-
-import Peao.Peao;
 public class CasaEspecial extends Casa {
 
     int tipoCasa;
