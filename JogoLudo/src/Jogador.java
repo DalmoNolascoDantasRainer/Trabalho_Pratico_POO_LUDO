@@ -43,6 +43,12 @@ public class Jogador {
         this.peoesChegada = peoesChegada;
     }
 
+    // Método para adicionar um peão ao jogador
+    public void adicionarPeao(Peao peao) { //****************************************************************************** */
+        listaPeoes.add(peao);
+    }
+    
+
     // IMPLEMENTAR FUNÇÃO JOGAR
 
     /*

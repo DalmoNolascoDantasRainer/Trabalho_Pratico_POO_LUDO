@@ -1,11 +1,170 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
+
+public class Tabuleiro {
+    private JPanel painelTabuleiro;
+    private ArrayList<Casa> listaCasas;
+    private ArrayList<CasaFinal> listaTrilhasFinais;
+    private int[] caminho;
+    private int[] trilhaFinalVermelho;
+    private int[] trilhaFinalAzul;
+    private int[] trilhaFinalVerde;
+    private int[] trilhaFinalAmarelo;
+
+    public Tabuleiro() {
+        listaCasas = new ArrayList<>();
+        listaTrilhasFinais = new ArrayList<>();
+        inicializarInterface();
+        inicializaTabuleiro();
+    }
+
+    public JPanel getPanel() {
+        return painelTabuleiro;
+    }
+
+    private void inicializarInterface() {
+        // Configura a janela principal
+        painelTabuleiro = new JPanel();
+        painelTabuleiro.setLayout(new GridLayout(15, 15)); // Tabuleiro 15x15
+
+        for (int i = 0; i < 15 * 15; i++) {
+            JButton botao = new JButton();
+            botao.setFont(new Font("Arial", Font.BOLD, 10));
+            botao.setBackground(Color.LIGHT_GRAY);
+
+            // Define as cores e funcionalidade conforme a posição no tabuleiro Ludo
+            int linha = i / 15;
+            int coluna = i % 15;
+
+            if ((linha < 6 && coluna < 6) || (linha > 8 && coluna < 6) || (linha < 6 && coluna > 8) || (linha > 8 && coluna > 8)) {
+                // Áreas das bases coloridas
+                if (linha < 6 && coluna < 6) botao.setBackground(Color.RED);
+                else if (linha < 6 && coluna > 8) botao.setBackground(Color.GREEN);
+                else if (linha > 8 && coluna < 6) botao.setBackground(Color.YELLOW);
+                else if (linha > 8 && coluna > 8) botao.setBackground(Color.BLUE);
+            } else if ((linha == 7 && coluna >= 1 && coluna <= 5) || (linha == 7 && coluna >= 9 && coluna <= 13) ||
+                       (coluna == 7 && linha >= 1 && linha <= 5) || (coluna == 7 && linha >= 9 && linha <= 13)) {
+                // Caminhos seguros (centralizados)
+                botao.setBackground(Color.WHITE);
+            } else if (linha == 7 || coluna == 7) {
+                // Caminhos principais
+                botao.setBackground(Color.GRAY);
+            }
+
+            painelTabuleiro.add(botao); // Adiciona o botão ao painel
+        }
+    }
+
+    public void inicializaTabuleiro() {
+        // Define as posições das casas no caminho cinza (índices lineares)
+        caminho = new int[] {
+            91, 92, 93, 94, 95, 96, 81, 66, 51, 36, 21, 6, 7, 8, 23, 38, 53, 68, 83, 98, 99, 100, 101, 102, 103, 104, 119, 134, 133, 132, 131, 130, 129, 128, 143, 158, 173, 188, 203, 218, 217, 216, 201, 186, 171, 156, 141, 126, 125, 124, 123, 122, 121, 120, 105, 90};
+            
+        trilhaFinalVermelho = new int[] {106, 107, 108, 109, 110, 111};
+        trilhaFinalAmarelo = new int[] {202, 187, 172, 157, 142, 127};
+        trilhaFinalAzul = new int[] {118, 117, 116, 115, 114, 113};
+        trilhaFinalVerde = new int[] {22, 37, 52, 67, 82, 97};
+
+        //listaTrilhasFinais.add(trilhaFinalVermelho);
+
+        // Inicializa as casas no caminho cinza
+        for (int i = 0; i < caminho.length; i++) {
+            int posicao = caminho[i];
+            listaCasas.add(new Casa(posicao));  // Adiciona a casa à lista
+        }
+
+        for (int i = 0; i < trilhaFinalAmarelo.length; i++) {
+            int posicao = trilhaFinalAmarelo[i];
+            listaTrilhasFinais.add(new CasaFinal(posicao)); // Adiciona a casa à lista
+        }
+
+        
+    }
+
+    public void InicializaTrilhasFinais(){
+        
+    }
+
+    public int[] getCaminho() {
+        return caminho;
+    }
+    //modificando
+    public void limparTabuleiro() {
+        for (Component component : painelTabuleiro.getComponents()) {
+            JButton botao = (JButton) component;
+            botao.setText("");
+        }
+    }
+
+    public void posicionarPeao(Peao peao) {
+        int posicaoAtual = peao.getPosicaoAtual();
+        if (posicaoAtual >= 0 && posicaoAtual < 15 * 15) {
+            JButton botao = (JButton) painelTabuleiro.getComponent(posicaoAtual);
+            botao.setText(peao.getCorPeao().name().substring(0, 1)); // Exibe a inicial da cor do peão
+    
+            // Define a cor do botão com base na cor do peão
+            switch (peao.getCorPeao()) {
+                case AMARELO:
+                    botao.setBackground(Color.YELLOW);
+                    break;
+                case AZUL:
+                    botao.setBackground(Color.BLUE);
+                    break;
+                case VERDE:
+                    botao.setBackground(Color.GREEN);
+                    break;
+                case VERMELHO:
+                    botao.setBackground(Color.RED);
+                    break;
+            }
+        }
+    }
+
+    public ArrayList<Casa> getListaCasas() {
+        return listaCasas;
+    }
+
+    public ArrayList<CasaFinal> getListaTrilhasFinais() {
+        return listaTrilhasFinais;
+    }
+
+    public void atualizarPosicaoPeao(Peao peao, int novaPosicao) {
+        // Limpa a posição atual do peão
+        int posicaoAtual = peao.getPosicaoAtual();
+        if (posicaoAtual >= 0 && posicaoAtual < 15 * 15) {
+            ((JButton)painelTabuleiro.getComponent(posicaoAtual)).setText("");
+            ((JButton)painelTabuleiro.getComponent(posicaoAtual)).setBackground(Color.LIGHT_GRAY); 
+        }
+
+        // Atualiza a posição do peão
+        peao.setPosicaoAtual(novaPosicao);
+
+        // Adiciona o peão na nova posição
+        posicionarPeao(peao);
+    }
+
+    public void exibirEstadoCasas() {
+        for (int i = 0; i < listaCasas.size(); i++) {
+            Casa casa = listaCasas.get(i);
+            System.out.print("Casa " + i + ": ");
+            for (Peao peao : casa.getListaPeoes()) {
+                System.out.print(peao.getCorPeao().name().substring(0, 1) + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+/*import java.util.ArrayList;
 public class Tabuleiro{
-    private ArrayList<CasaFinal> listaTrilhaFinal;
+    private ArrayList<CasaFinal> ListaTrilhasFinais;
     private ArrayList<Casa> listaCasas;
 
     public Tabuleiro(){
         listaCasas = new ArrayList<>();
-        listaTrilhaFinal = new ArrayList<>();
+        ListaTrilhasFinais = new ArrayList<>();
         inicializaTabuleiro();
     }
 
@@ -13,8 +172,8 @@ public class Tabuleiro{
         return listaCasas;
     }
 
-    public ArrayList<CasaFinal> getListaTrilhaFinal() {
-        return listaTrilhaFinal;
+    public ArrayList<CasaFinal> getListaTrilhasFinais() {
+        return ListaTrilhasFinais;
     }
 
     public void inicializaTabuleiro(){
@@ -47,18 +206,17 @@ public class Tabuleiro{
                 trilhaFinalVermelho.add(new CasaFinal());
             }
 
-        /*// Inicializa a trilha final para cada jogador (6 casas para cada cor)
+         Inicializa a trilha final para cada jogador (6 casas para cada cor)
         for (Jogador jogador : jogadores) {
             ArrayList<CasaFinal> trilhaFinal = new ArrayList<>();
             for (int i = 0; i < 6; i++) {
                 trilhaFinal.add(new CasaFinal());
             }
             jogador.setTrilhaFinal(trilhaFinal);
-        } */
+        } 
     }
 }
-
-
+*/
 
 /*import javax.swing.*;
 import java.awt.*;

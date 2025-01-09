@@ -11,8 +11,8 @@ public class CasaFinal extends Casa {
 
     }
 
-    public CasaFinal() {
-        super(0, new ArrayList<Peao>());
+    public CasaFinal(int posicao) {
+        super(posicao, new ArrayList<Peao>());
         
     }
 
