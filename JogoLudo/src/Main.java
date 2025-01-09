@@ -135,5 +135,6 @@ public class Main {
                 tabuleiro.posicionarPeao(peao);
             }
         }
+        
     }
 }

@@ -17,6 +17,7 @@ public class JogadorAzul extends Jogador {
         System.out.println("Peão escolhido: " + peaoEscolhido);
         System.out.println("Posição inicial do peão: " + peao.getPosicaoAtual());
         System.out.println("Dado: " + dado);
+        int posicaoAnterior = peao.getPosicaoAtual();
     
         if (peao.isEstaNaBase() && podeRetirar == 1) {
             peao.setPosicaoAtual(referenciaSaida);
@@ -46,7 +47,9 @@ public class JogadorAzul extends Jogador {
             }
         }
     
-        tabuleiro.atualizarPosicaoPeao(peao, peao.getPosicaoAtual());
+        if(posicaoAnterior != -1){
+            tabuleiro.atualizarPosicaoPeao(peao, posicaoAnterior);
+        }
         System.out.println("Posição final do peão: " + peao.getPosicaoAtual());
         tabuleiro.exibirEstadoCasas();
     }

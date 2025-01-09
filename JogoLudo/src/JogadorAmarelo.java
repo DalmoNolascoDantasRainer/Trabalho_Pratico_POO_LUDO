@@ -17,6 +17,7 @@ public class JogadorAmarelo extends Jogador {
         System.out.println("Peão escolhido: " + peaoEscolhido);
         System.out.println("Posição inicial do peão: " + peao.getPosicaoAtual());
         System.out.println("Dado: " + dado);
+        int posicaoAnterior = peao.getPosicaoAtual();
     
         if (peao.isEstaNaBase() && podeRetirar == 1) {
             peao.setPosicaoAtual(referenciaSaida);
@@ -25,7 +26,7 @@ public class JogadorAmarelo extends Jogador {
         } else {
             for (int i = 0; i < dado; i++) { 
                 if ((peao.getPosicaoAtual() == 202) && !peao.isEstaNaTrilhaFinal()) {
-                    peao.setPosicaoAtual(0); 
+                    peao.setPosicaoAtual(87); 
                     peao.setEstaNaTrilhaFinal(true);
                     System.out.println("Peão entrou na trilha final na posição: 0");
                 } else if (peao.isEstaNaTrilhaFinal()) {
@@ -47,7 +48,9 @@ public class JogadorAmarelo extends Jogador {
             }
         }
     
-        tabuleiro.atualizarPosicaoPeao(peao, peao.getPosicaoAtual());
+        if(posicaoAnterior != -1){
+            tabuleiro.atualizarPosicaoPeao(peao, posicaoAnterior);
+        }
         System.out.println("Posição final do peão: " + peao.getPosicaoAtual());
         tabuleiro.exibirEstadoCasas();
     }

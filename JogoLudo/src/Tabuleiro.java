@@ -7,16 +7,14 @@ public class Tabuleiro {
     private ArrayList<Casa> listaCasas;
     private ArrayList<CasaFinal> listaTrilhasFinais;
     private int[] caminho;
-    private int[] trilhaFinalVermelho;
-    private int[] trilhaFinalAzul;
-    private int[] trilhaFinalVerde;
-    private int[] trilhaFinalAmarelo;
+
 
     public Tabuleiro() {
         listaCasas = new ArrayList<>();
         listaTrilhasFinais = new ArrayList<>();
         inicializarInterface();
         inicializaTabuleiro();
+        InicializaTrilhasFinais();
     }
 
     public JPanel getPanel() {
@@ -60,30 +58,33 @@ public class Tabuleiro {
         // Define as posições das casas no caminho cinza (índices lineares)
         caminho = new int[] {
             91, 92, 93, 94, 95, 96, 81, 66, 51, 36, 21, 6, 7, 8, 23, 38, 53, 68, 83, 98, 99, 100, 101, 102, 103, 104, 119, 134, 133, 132, 131, 130, 129, 128, 143, 158, 173, 188, 203, 218, 217, 216, 201, 186, 171, 156, 141, 126, 125, 124, 123, 122, 121, 120, 105, 90};
-            
-        trilhaFinalVermelho = new int[] {106, 107, 108, 109, 110, 111};
-        trilhaFinalAmarelo = new int[] {202, 187, 172, 157, 142, 127};
-        trilhaFinalAzul = new int[] {118, 117, 116, 115, 114, 113};
-        trilhaFinalVerde = new int[] {22, 37, 52, 67, 82, 97};
 
-        //listaTrilhasFinais.add(trilhaFinalVermelho);
 
         // Inicializa as casas no caminho cinza
         for (int i = 0; i < caminho.length; i++) {
             int posicao = caminho[i];
             listaCasas.add(new Casa(posicao));  // Adiciona a casa à lista
         }
-
-        for (int i = 0; i < trilhaFinalAmarelo.length; i++) {
-            int posicao = trilhaFinalAmarelo[i];
-            listaTrilhasFinais.add(new CasaFinal(posicao)); // Adiciona a casa à lista
-        }
-
         
     }
 
     public void InicializaTrilhasFinais(){
-        
+        int[] trilhaFinalVermelho = {106, 107, 108, 109, 110, 111};
+        int[] trilhaFinalAmarelo = {202, 187, 172, 157, 142, 127};
+        int[] trilhaFinalAzul = {118, 117, 116, 115, 114, 113};
+        int[] trilhaFinalVerde = {22, 37, 52, 67, 82, 97};
+
+        adicionarTrilhaFinal(trilhaFinalVermelho);
+        adicionarTrilhaFinal(trilhaFinalAmarelo);
+        adicionarTrilhaFinal(trilhaFinalAzul);
+        adicionarTrilhaFinal(trilhaFinalVerde);
+    }
+
+    public void adicionarTrilhaFinal(int[] trilhaFinal){
+        for (int i = 0; i < trilhaFinal.length; i++) {
+            int posicao = trilhaFinal[i];
+            listaTrilhasFinais.add(new CasaFinal(posicao));  // Adiciona a casa na lista
+        }
     }
 
     public int[] getCaminho() {
@@ -98,6 +99,7 @@ public class Tabuleiro {
     }
 
     public void posicionarPeao(Peao peao) {
+
         int posicaoAtual = peao.getPosicaoAtual();
         if (posicaoAtual >= 0 && posicaoAtual < 15 * 15) {
             JButton botao = (JButton) painelTabuleiro.getComponent(posicaoAtual);
@@ -129,19 +131,18 @@ public class Tabuleiro {
         return listaTrilhasFinais;
     }
 
-    public void atualizarPosicaoPeao(Peao peao, int novaPosicao) {
+    public void atualizarPosicaoPeao(Peao peao, int antigaPosicao) {
         // Limpa a posição atual do peão
-        int posicaoAtual = peao.getPosicaoAtual();
-        if (posicaoAtual >= 0 && posicaoAtual < 15 * 15) {
-            ((JButton)painelTabuleiro.getComponent(posicaoAtual)).setText("");
-            ((JButton)painelTabuleiro.getComponent(posicaoAtual)).setBackground(Color.LIGHT_GRAY); 
+        if (antigaPosicao >= 0 && antigaPosicao < 15 * 15) {
+            if(antigaPosicao == 7 || antigaPosicao == 119 || antigaPosicao == 217 || antigaPosicao == 105){
+                JButton botaoAtual = (JButton) painelTabuleiro.getComponent(antigaPosicao);
+                botaoAtual.setBackground(Color.GRAY);
+            } else {
+                JButton botaoAtual = (JButton) painelTabuleiro.getComponent(antigaPosicao);
+                botaoAtual.setText("");
+                botaoAtual.setBackground(Color.LIGHT_GRAY);
+            }
         }
-
-        // Atualiza a posição do peão
-        peao.setPosicaoAtual(novaPosicao);
-
-        // Adiciona o peão na nova posição
-        posicionarPeao(peao);
     }
 
     public void exibirEstadoCasas() {
