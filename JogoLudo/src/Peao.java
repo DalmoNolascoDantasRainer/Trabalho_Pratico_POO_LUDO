@@ -68,7 +68,7 @@ public class Peao {
     }
 
     public void retornarBase() {
-        this.posicaoAtual = 0;
+        this.posicaoAtual = -1;
         this.estaNaBase = true;
         this.estaNaTrilhaFinal = false;
     }

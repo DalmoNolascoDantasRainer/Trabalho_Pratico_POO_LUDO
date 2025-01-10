@@ -132,8 +132,20 @@ public class Tabuleiro {
     }
 
     public void atualizarPosicaoPeao(Peao peao, int antigaPosicao) {
-        // Limpa a posição atual do peão
+        // Limpa a posição antiga do peão e come os peoes na casade destino
+        int novaPosicao = peao.getPosicaoAtual();
         if (antigaPosicao >= 0 && antigaPosicao < 15 * 15) {
+            for (int j = 0; j < caminho.length; j++){
+                if (caminho[j] == novaPosicao){
+                    for (Peao peaoAdversario : listaCasas.get(j).getListaPeoes()){
+                        if (peaoAdversario.getCorPeao() != peao.getCorPeao()){
+                            peaoAdversario.retornarBase();
+                            listaCasas.get(j).removerPeca(peaoAdversario);
+
+                        }
+                    }
+                }
+            }
             if(antigaPosicao == 7 || antigaPosicao == 119 || antigaPosicao == 217 || antigaPosicao == 105){
                 JButton botaoAtual = (JButton) painelTabuleiro.getComponent(antigaPosicao);
                 botaoAtual.setBackground(Color.GRAY);
@@ -156,6 +168,7 @@ public class Tabuleiro {
         }
     }
 }
+
 
 
 /*import java.util.ArrayList;

@@ -46,6 +46,16 @@ public class JogadorVermelho extends Jogador {
                     }
                 }
             }
+            
+        }
+        for (Casa casa : tabuleiro.getListaCasas()) {
+                if (casa.getPosicao() == peao.getPosicaoAtual()){
+                    casa.adicionarPeca(peao);
+                    
+                }
+                else if (casa.getPosicao() == posicaoAnterior){
+                    casa.removerPeca(peao);
+                }
         }
         if(posicaoAnterior != -1){
             tabuleiro.atualizarPosicaoPeao(peao, posicaoAnterior);

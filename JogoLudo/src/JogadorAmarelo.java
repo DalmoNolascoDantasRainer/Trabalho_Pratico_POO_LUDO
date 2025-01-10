@@ -9,8 +9,11 @@ public class JogadorAmarelo extends Jogador {
     public void jogar(int dado, int peaoEscolhido) {
         int podeRetirar = 0;
         int referenciaSaida = 201;  
-        
-        podeRetirar = 1;
+        int[] caminho = tabuleiro.getCaminho();
+
+        if (dado == 6) {
+            podeRetirar = 1;
+        }
     
         Peao peao = getListaPeoes().get(peaoEscolhido);
     
@@ -18,6 +21,7 @@ public class JogadorAmarelo extends Jogador {
         System.out.println("Posição inicial do peão: " + peao.getPosicaoAtual());
         System.out.println("Dado: " + dado);
         int posicaoAnterior = peao.getPosicaoAtual();
+        
     
         if (peao.isEstaNaBase() && podeRetirar == 1) {
             peao.setPosicaoAtual(referenciaSaida);
@@ -34,7 +38,7 @@ public class JogadorAmarelo extends Jogador {
                     System.out.println("Peão avançou na trilha final para a posição: " + peao.getPosicaoAtual());
                 } else {
 
-                    int[] caminho = tabuleiro.getCaminho();
+                    
                     for (int j = 0; j < caminho.length; j++) {
                         if (caminho[j] == peao.getPosicaoAtual()) {
                             System.out.println("Peão avançou para a posição: " + peao.getPosicaoAtual());
@@ -46,9 +50,19 @@ public class JogadorAmarelo extends Jogador {
                     }
                 }
             }
+            for (Casa casa : tabuleiro.getListaCasas()) {
+                if (casa.getPosicao() == peao.getPosicaoAtual()){
+                    casa.adicionarPeca(peao);
+                    
+                }
+                else if (casa.getPosicao() == posicaoAnterior){
+                    casa.removerPeca(peao);
+                }
+            }
         }
     
         if(posicaoAnterior != -1){
+            //precisa de colocar o peao na posicao correta, ERRO
             tabuleiro.atualizarPosicaoPeao(peao, posicaoAnterior);
         }
         System.out.println("Posição final do peão: " + peao.getPosicaoAtual());
