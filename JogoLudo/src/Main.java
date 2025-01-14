@@ -114,8 +114,29 @@ public class Main {
                 System.out.println("Chamando jogadorAtual.jogar"); // Depuração
                 System.out.println("Tipo de jogadorAtual: " + jogadorAtual.getClass().getName()); // Depuração
                 jogadorAtual.jogar(resultadoDado, peaoEscolhido);
-                if(peaoAtual.getPosicaoAtual() == 127 && posicaoAnterior != 127){
-                    jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+                switch (jogadorAtual.getClass().getName()) {
+                    case "JogadorAmarelo":
+                        if(peaoAtual.getPosicaoAtual() == 127 && posicaoAnterior != 127){
+                            jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+                        }
+                        break;
+                    case "JogadorAzul":
+                        if(peaoAtual.getPosicaoAtual() == 113 && posicaoAnterior != 113){
+                            jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+                        }
+                        break;
+                    case "JogadorVerde":
+                        if(peaoAtual.getPosicaoAtual() == 97 && posicaoAnterior != 97){
+                            jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+                        }
+                        break;
+                    case "JogadorVermelho":
+                        if(peaoAtual.getPosicaoAtual() == 111 && posicaoAnterior != 111){
+                            jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+                        }
+                        break;
+                    default:
+                        break;
                 }
                 atualizarTabuleiro(tabuleiro, jogadorAmarelo, jogadorAzul, jogadorVerde, jogadorVermelho);
                 if(jogadorAtual.getPecasChegada() == 4){

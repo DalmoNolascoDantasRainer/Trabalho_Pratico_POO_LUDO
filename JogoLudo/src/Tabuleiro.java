@@ -91,7 +91,11 @@ public class Tabuleiro {
     public void adicionarTrilhaFinal(int[] trilhaFinal, ArrayList<CasaFinal> listaTrilhasFinais) {
         for (int i = 0; i < trilhaFinal.length; i++) {
             int posicao = trilhaFinal[i];
+            if (i == trilhaFinal.length - 1) {
+                listaTrilhasFinais.add(new CasaFinal(posicao, true));  // Adiciona a casa na lista
+            } else {
             listaTrilhasFinais.add(new CasaFinal(posicao));  // Adiciona a casa na lista
+            }
         }
     }
 
@@ -155,6 +159,24 @@ public class Tabuleiro {
     public void atualizarPosicaoPeao(Peao peao, int antigaPosicao) {
         // Limpa a posição antiga do peão e come os peoes na casade destino
         int novaPosicao = peao.getPosicaoAtual();
+        for (Casa casa : this.getListaCasas()) {
+            if (casa.getPosicao() == peao.getPosicaoAtual()){
+                casa.adicionarPeca(peao);
+                
+            }
+            else if (casa.getPosicao() == antigaPosicao){
+                casa.removerPeca(peao);
+            }
+        }
+        for (Casa casa : this.getTrilhaFinalAmarelo()){
+            if (casa.getPosicao() == peao.getPosicaoAtual()){
+                
+                casa.adicionarPeca(peao);
+            }
+            else if (casa.getPosicao() == antigaPosicao){
+                casa.removerPeca(peao);
+            }
+        }
         System.out.println("Atualizando posição do peão. Antiga posição: " + antigaPosicao + ", Nova posição: " + novaPosicao);
         if (antigaPosicao >= 0 && antigaPosicao < 15 * 15) {
             for (int j = 0; j < caminho.length; j++){
@@ -171,11 +193,20 @@ public class Tabuleiro {
                     }
                 }
             }
+            boolean eraTrilhaFinal = false;
+            for (int i = 0; i < trilhaFinalAmarelo.size(); i++) {
+                if (trilhaFinalAmarelo.get(i).getPosicao() == antigaPosicao || trilhaFinalAzul.get(i).getPosicao() == antigaPosicao || trilhaFinalVerde.get(i).getPosicao() == antigaPosicao || trilhaFinalVermelho.get(i).getPosicao() == antigaPosicao) {
+                    eraTrilhaFinal = true;
+                    break;
+                }
+            }
+
             if(antigaPosicao == 7 || antigaPosicao == 119 || antigaPosicao == 217 || antigaPosicao == 105){
                 JButton botaoAtual = (JButton) painelTabuleiro.getComponent(antigaPosicao);
                 botaoAtual.setBackground(Color.GRAY);
             } 
-            else if(antigaPosicao == 202 || antigaPosicao == 187 || antigaPosicao == 172 || antigaPosicao == 157 || antigaPosicao == 142){
+           
+            else if(eraTrilhaFinal){
                 JButton botaoAtual = (JButton) painelTabuleiro.getComponent(antigaPosicao);
                 botaoAtual.setBackground(Color.WHITE);
             }

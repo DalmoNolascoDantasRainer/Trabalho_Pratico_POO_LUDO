@@ -7,14 +7,9 @@ public class JogadorAmarelo extends Jogador {
 
     @Override
     public void jogar(int dado, int peaoEscolhido) {
-        int podeRetirar = 0;
         int referenciaSaida = 201;  
         int[] caminho = tabuleiro.getCaminho();
         int[] trilhaFinalAmarelo = {202, 187, 172, 157, 142, 127};
-
-        if (dado == 6) {
-            podeRetirar = 1;
-        }
     
         Peao peao = getListaPeoes().get(peaoEscolhido);
     
@@ -24,11 +19,12 @@ public class JogadorAmarelo extends Jogador {
         int posicaoAnterior = peao.getPosicaoAtual();
         
     
-        if (peao.isEstaNaBase() && podeRetirar == 1) {
+        if (peao.isEstaNaBase() && dado == 6) {
             peao.setPosicaoAtual(referenciaSaida);
             peao.setEstaNaBase(false);
             System.out.println("Peão saiu da base para a posição: " + referenciaSaida);
-        } else if (!peao.isEstaNaBase() && !peao.isEstaNaTrilhaFinal()) {
+        } 
+        else if (!peao.isEstaNaBase() && !peao.isEstaNaTrilhaFinal()) {
             for (int i = 0; i < dado; i++) { 
                 if ((peao.getPosicaoAtual() == 217) && !peao.isEstaNaTrilhaFinal()) {
                     peao.setPosicaoAtual(202); 
@@ -45,7 +41,6 @@ public class JogadorAmarelo extends Jogador {
                     System.out.println("Peão avançou na trilha final para a posição: " + peao.getPosicaoAtual());
                 } else {
 
-                    
                     for (int j = 0; j < caminho.length; j++) {
                         if (caminho[j] == peao.getPosicaoAtual()) {
                             System.out.println("Peão avançou para a posição: " + peao.getPosicaoAtual());
@@ -61,7 +56,7 @@ public class JogadorAmarelo extends Jogador {
         else{//Realizar o tratamento de exceção
             for(int i = 0; i < tabuleiro.getTrilhaFinalAmarelo().size(); i++){
                 if(tabuleiro.getTrilhaFinalAmarelo().get(i).getPosicao() == peao.getPosicaoAtual()){
-                    if(i + dado < tabuleiro.getTrilhaFinalAmarelo().size()){
+                    if(tabuleiro.getTrilhaFinalAmarelo().get(i).podeAndar(dado, trilhaFinalAmarelo)){
                         peao.setPosicaoAtual(tabuleiro.getTrilhaFinalAmarelo().get(i + dado).getPosicao());
                         break;
                     }
@@ -72,29 +67,8 @@ public class JogadorAmarelo extends Jogador {
             }
         }
         
-
-        for (Casa casa : tabuleiro.getListaCasas()) {
-            if (casa.getPosicao() == peao.getPosicaoAtual()){
-                casa.adicionarPeca(peao);
-                
-            }
-            else if (casa.getPosicao() == posicaoAnterior){
-                casa.removerPeca(peao);
-            }
-        }
-        for (Casa casa : tabuleiro.getTrilhaFinalAmarelo()){
-            if (casa.getPosicao() == peao.getPosicaoAtual()){
-                
-                casa.adicionarPeca(peao);
-            }
-            else if (casa.getPosicao() == posicaoAnterior){
-                casa.removerPeca(peao);
-            }
-        }
     
-        if(posicaoAnterior != -1 ){//não come ao sair da casa base
-            tabuleiro.atualizarPosicaoPeao(peao, posicaoAnterior);
-        }
+        tabuleiro.atualizarPosicaoPeao(peao, posicaoAnterior);
         System.out.println("Posição final do peão: " + peao.getPosicaoAtual());
         tabuleiro.exibirEstadoCasas();
     }
