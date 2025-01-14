@@ -3,9 +3,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class Main {
     private static Jogador jogadorAtual;
     private static JLabel dadoLabel;
+    private static JLabel jogadorAtualLabel;
     private static JComboBox<Integer> peaoComboBox;
     private static int resultadoDado;
     private static int turno;
@@ -48,41 +50,11 @@ public class Main {
     }
 
     private static void placeComponents(JPanel panel, Jogador jogadorAmarelo, Jogador jogadorAzul, Jogador jogadorVerde, JogadorVermelho jogadorVermelho, Tabuleiro tabuleiro, Dado dado) {
-        JButton buttonAmarelo = new JButton("Jogador Amarelo");
-        panel.add(buttonAmarelo);
-        buttonAmarelo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //jogadorAtual = jogadorAmarelo;
-                System.out.println("Jogador Amarelo vai jogar.");
-            }
-        });
+        
 
-        JButton buttonAzul = new JButton("Jogador Azul");
-        panel.add(buttonAzul);
-        buttonAzul.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //jogadorAtual = jogadorAzul;
-                System.out.println("Jogador Azul vai jogar.");
-            }
-        });
-
-        JButton buttonVerde = new JButton("Jogador Verde");
-        panel.add(buttonVerde);
-        buttonVerde.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //jogadorAtual = jogadorVerde;
-                System.out.println("Jogador Verde vai jogar.");
-            }
-        });
-
-        JButton buttonVermelho = new JButton("Jogador Vermelho");
-        panel.add(buttonVermelho);
-        buttonVermelho.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //jogadorAtual = jogadorVermelho;
-                System.out.println("Jogador Vermelho vai jogar.");
-            }
-        });
+        
+        jogadorAtualLabel = new JLabel("Jogador Atual: ");
+        panel.add(jogadorAtualLabel);
 
         // Adiciona o botão para rolar o dado
         JButton rollDiceButton = new JButton("Rolar Dado");
@@ -92,23 +64,6 @@ public class Main {
                 resultadoDado = dado.rolarDado();
                 dadoLabel.setText("Resultado do dado: " + resultadoDado);
                 System.out.println("Resultado do dado: " + resultadoDado); // Depuração
-            }
-        });
-
-        // Adiciona o label para exibir o resultado do dado
-        dadoLabel = new JLabel("Resultado do dado: ");
-        panel.add(dadoLabel);
-
-        // Adiciona o combo box para selecionar o peão
-        peaoComboBox = new JComboBox<>(new Integer[]{0, 1, 2, 3});
-        panel.add(peaoComboBox);
-
-        // Adiciona o botão para efetivar a ação
-        JButton efetivarAcaoButton = new JButton("Efetivar Ação");
-        panel.add(efetivarAcaoButton);
-        efetivarAcaoButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                
                 switch (turno) {
                     case 0:
                         jogadorAtual = jogadorAmarelo;
@@ -126,6 +81,27 @@ public class Main {
                         jogadorAtual = jogadorAmarelo;
                         break;
                 }
+                jogadorAtualLabel.setText("Jogador Atual: " + jogadorAtual.getNome());
+                turno = (turno + 1) % 4;
+            }
+        });
+
+        // Adiciona o label para exibir o resultado do dado
+        dadoLabel = new JLabel("Resultado do dado: ");
+        panel.add(dadoLabel);
+        // Adiciona o combo box para selecionar o peão
+        peaoComboBox = new JComboBox<>(new Integer[]{0, 1, 2, 3});
+        peaoComboBox.setPreferredSize(new Dimension(150, 25)); // Define o tamanho preferido
+        peaoComboBox.setMaximumSize(new Dimension(150, 25)); // Define o tamanho máximo
+        panel.add(peaoComboBox);
+
+        // Adiciona o botão para efetivar a ação
+        JButton efetivarAcaoButton = new JButton("Efetivar Ação");
+        panel.add(efetivarAcaoButton);
+        efetivarAcaoButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                
                 
                 int peaoEscolhido = (int) peaoComboBox.getSelectedItem();
                 Peao peaoAtual = jogadorAtual.getListaPeoes().get(peaoEscolhido);
@@ -164,7 +140,7 @@ public class Main {
                 if(jogadorAtual.getPecasChegada() == 4){
                     JOptionPane.showMessageDialog(null, "O jogador " + jogadorAtual.getNome() + " venceu!");
                 }
-                turno = (turno + 1) % 4;
+                
                 
             }
             
