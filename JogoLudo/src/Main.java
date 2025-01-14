@@ -8,10 +8,12 @@ public class Main {
     private static JLabel dadoLabel;
     private static JComboBox<Integer> peaoComboBox;
     private static int resultadoDado;
+    private static int turno;
 
     public static void main(String[] args) {
         // Instancia um objeto da classe Dado
         Dado dado = new Dado();
+        
 
         // Cria jogadores e inicializa peões
         Tabuleiro tabuleiro = new Tabuleiro();
@@ -50,7 +52,7 @@ public class Main {
         panel.add(buttonAmarelo);
         buttonAmarelo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                jogadorAtual = jogadorAmarelo;
+                //jogadorAtual = jogadorAmarelo;
                 System.out.println("Jogador Amarelo vai jogar.");
             }
         });
@@ -59,7 +61,7 @@ public class Main {
         panel.add(buttonAzul);
         buttonAzul.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                jogadorAtual = jogadorAzul;
+                //jogadorAtual = jogadorAzul;
                 System.out.println("Jogador Azul vai jogar.");
             }
         });
@@ -68,7 +70,7 @@ public class Main {
         panel.add(buttonVerde);
         buttonVerde.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                jogadorAtual = jogadorVerde;
+                //jogadorAtual = jogadorVerde;
                 System.out.println("Jogador Verde vai jogar.");
             }
         });
@@ -77,7 +79,7 @@ public class Main {
         panel.add(buttonVermelho);
         buttonVermelho.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                jogadorAtual = jogadorVermelho;
+                //jogadorAtual = jogadorVermelho;
                 System.out.println("Jogador Vermelho vai jogar.");
             }
         });
@@ -106,6 +108,25 @@ public class Main {
         panel.add(efetivarAcaoButton);
         efetivarAcaoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                
+                switch (turno) {
+                    case 0:
+                        jogadorAtual = jogadorAmarelo;
+                        break;
+                    case 1:
+                        jogadorAtual = jogadorVermelho;
+                        break;
+                    case 2:
+                        jogadorAtual = jogadorVerde;
+                        break;
+                    case 3:
+                        jogadorAtual = jogadorAzul;
+                        break;
+                    default:
+                        jogadorAtual = jogadorAmarelo;
+                        break;
+                }
+                
                 int peaoEscolhido = (int) peaoComboBox.getSelectedItem();
                 Peao peaoAtual = jogadorAtual.getListaPeoes().get(peaoEscolhido);
                 int posicaoAnterior = peaoAtual.getPosicaoAtual();
@@ -138,11 +159,15 @@ public class Main {
                     default:
                         break;
                 }
+                resultadoDado = 0;
                 atualizarTabuleiro(tabuleiro, jogadorAmarelo, jogadorAzul, jogadorVerde, jogadorVermelho);
                 if(jogadorAtual.getPecasChegada() == 4){
                     JOptionPane.showMessageDialog(null, "O jogador " + jogadorAtual.getNome() + " venceu!");
                 }
+                turno = (turno + 1) % 4;
+                
             }
+            
         });
     }
 
