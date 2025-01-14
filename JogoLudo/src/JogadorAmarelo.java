@@ -10,6 +10,7 @@ public class JogadorAmarelo extends Jogador {
         int podeRetirar = 0;
         int referenciaSaida = 201;  
         int[] caminho = tabuleiro.getCaminho();
+        int[] trilhaFinalAmarelo = {202, 187, 172, 157, 142, 127};
 
         if (dado == 6) {
             podeRetirar = 1;
@@ -27,14 +28,20 @@ public class JogadorAmarelo extends Jogador {
             peao.setPosicaoAtual(referenciaSaida);
             peao.setEstaNaBase(false);
             System.out.println("Peão saiu da base para a posição: " + referenciaSaida);
-        } else {
+        } else if (!peao.isEstaNaBase() && !peao.isEstaNaTrilhaFinal()) {
             for (int i = 0; i < dado; i++) { 
-                if ((peao.getPosicaoAtual() == 202) && !peao.isEstaNaTrilhaFinal()) {
-                    peao.setPosicaoAtual(87); 
+                if ((peao.getPosicaoAtual() == 217) && !peao.isEstaNaTrilhaFinal()) {
+                    peao.setPosicaoAtual(202); 
                     peao.setEstaNaTrilhaFinal(true);
                     System.out.println("Peão entrou na trilha final na posição: 0");
                 } else if (peao.isEstaNaTrilhaFinal()) {
-                    peao.setPosicaoAtual((peao.getPosicaoAtual() + 1) % 6);
+                    System.out.println("Peão esta na trilha final");
+                    for (int j = 0; j < trilhaFinalAmarelo.length; j++) {
+                        if (trilhaFinalAmarelo[j] == peao.getPosicaoAtual()) {
+                            peao.setPosicaoAtual(trilhaFinalAmarelo[(j + 1)]);
+                            break;
+                        }
+                    }
                     System.out.println("Peão avançou na trilha final para a posição: " + peao.getPosicaoAtual());
                 } else {
 
@@ -50,19 +57,42 @@ public class JogadorAmarelo extends Jogador {
                     }
                 }
             }
-            for (Casa casa : tabuleiro.getListaCasas()) {
-                if (casa.getPosicao() == peao.getPosicaoAtual()){
-                    casa.adicionarPeca(peao);
-                    
-                }
-                else if (casa.getPosicao() == posicaoAnterior){
-                    casa.removerPeca(peao);
+        }
+        else{//Realizar o tratamento de exceção
+            for(int i = 0; i < tabuleiro.getTrilhaFinalAmarelo().size(); i++){
+                if(tabuleiro.getTrilhaFinalAmarelo().get(i).getPosicao() == peao.getPosicaoAtual()){
+                    if(i + dado < tabuleiro.getTrilhaFinalAmarelo().size()){
+                        peao.setPosicaoAtual(tabuleiro.getTrilhaFinalAmarelo().get(i + dado).getPosicao());
+                        break;
+                    }
+                    else{
+                        //Realizar o tratamento de exceção
+                    }
                 }
             }
         }
+        
+
+        for (Casa casa : tabuleiro.getListaCasas()) {
+            if (casa.getPosicao() == peao.getPosicaoAtual()){
+                casa.adicionarPeca(peao);
+                
+            }
+            else if (casa.getPosicao() == posicaoAnterior){
+                casa.removerPeca(peao);
+            }
+        }
+        for (Casa casa : tabuleiro.getTrilhaFinalAmarelo()){
+            if (casa.getPosicao() == peao.getPosicaoAtual()){
+                
+                casa.adicionarPeca(peao);
+            }
+            else if (casa.getPosicao() == posicaoAnterior){
+                casa.removerPeca(peao);
+            }
+        }
     
-        if(posicaoAnterior != -1){
-            //precisa de colocar o peao na posicao correta, ERRO
+        if(posicaoAnterior != -1 ){//não come ao sair da casa base
             tabuleiro.atualizarPosicaoPeao(peao, posicaoAnterior);
         }
         System.out.println("Posição final do peão: " + peao.getPosicaoAtual());

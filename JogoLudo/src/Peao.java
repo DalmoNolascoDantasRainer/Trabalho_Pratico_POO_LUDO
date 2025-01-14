@@ -13,6 +13,7 @@ public class Peao {
     private boolean estaNaTrilhaFinal;
     private Cor corPeao;
     private int[] posicaoInicial;
+    private int indice;
 
     
     public Peao() {
@@ -20,16 +21,25 @@ public class Peao {
         this.estaNaBase = true;
         this.estaNaTrilhaFinal = false;
         this.posicaoInicial = new int[2];
+        this.indice = 0;
 
     }
 
-    public Peao(int posicaoAtual, boolean estaNaBase, boolean estaNaTrilhaFinal, Cor corPeao) {
+    public Peao(int posicaoAtual, boolean estaNaBase, boolean estaNaTrilhaFinal, Cor corPeao, int indice) {
         this.posicaoAtual = posicaoAtual;
         this.estaNaBase = estaNaBase;
         this.estaNaTrilhaFinal = estaNaTrilhaFinal;
         this.corPeao = corPeao;
+        this.indice = indice;
     }
     //getters e setters dos atributos
+    public int getIndice() {
+        return indice;
+    }
+
+    public void setIndice(int indice) {
+        this.indice = indice;
+    }
     public int getPosicaoAtual() {
         return posicaoAtual;
     }
@@ -108,42 +118,4 @@ public class Peao {
         }
     }
 
-
-class MainPeao {
-    public static void main(String[] args) {
-        // Instanciando um Peao com o construtor padrão
-        Peao peao1 = new Peao();
-        System.out.println("Peão criado com o construtor padrão:");
-        System.out.println("Posição atual: " + peao1.getPosicaoAtual());
-        System.out.println("Está na base: " + peao1.isEstaNaBase());
-        System.out.println("Está na trilha final: " + peao1.isEstaNaTrilhaFinal());
-        System.out.println();
-
-        // Modificando o peão
-        
-        peao1.setCorPeao(Cor.VERMELHO);
-        peao1.moverPeao(10); // Move o peão para a posição 10
-        peao1.setEstaNaBase(false);
-        System.out.println("Peão após mover para a posição 10:");
-        System.out.println("Posição atual: " + peao1.getPosicaoAtual());
-        System.out.println("Está na base: " + peao1.isEstaNaBase());
-        System.out.println("Cor do peão: " + peao1.getCorPeao());
-        System.out.println();
-
-        // Retornando o peão à base
-        peao1.retornarBase();
-        System.out.println("Peão após retornar à base:");
-        System.out.println("Posição atual: " + peao1.getPosicaoAtual());
-        System.out.println("Está na base: " + peao1.isEstaNaBase());
-        System.out.println("Está na trilha final: " + peao1.isEstaNaTrilhaFinal());
-        System.out.println();
-
-        // Instanciando outro Peão com o construtor parametrizado
-        Peao peao2 = new Peao(-1, true, false, Cor.AZUL);
-        System.out.println("Peão criado com o construtor parametrizado:");
-        System.out.println("Posição atual: " + peao2.getPosicaoAtual());
-        System.out.println("Está na base: " + peao2.isEstaNaBase());
-        System.out.println("Cor do peão: " + peao2.getCorPeao());
-    }
-}
 }

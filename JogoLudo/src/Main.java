@@ -107,11 +107,20 @@ public class Main {
         efetivarAcaoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int peaoEscolhido = (int) peaoComboBox.getSelectedItem();
+                Peao peaoAtual = jogadorAtual.getListaPeoes().get(peaoEscolhido);
+                int posicaoAnterior = peaoAtual.getPosicaoAtual();
+
                 System.out.println("Peão escolhido: " + peaoEscolhido); // Depuração
                 System.out.println("Chamando jogadorAtual.jogar"); // Depuração
                 System.out.println("Tipo de jogadorAtual: " + jogadorAtual.getClass().getName()); // Depuração
                 jogadorAtual.jogar(resultadoDado, peaoEscolhido);
+                if(peaoAtual.getPosicaoAtual() == 127 && posicaoAnterior != 127){
+                    jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+                }
                 atualizarTabuleiro(tabuleiro, jogadorAmarelo, jogadorAzul, jogadorVerde, jogadorVermelho);
+                if(jogadorAtual.getPecasChegada() == 4){
+                    JOptionPane.showMessageDialog(null, "O jogador " + jogadorAtual.getNome() + " venceu!");
+                }
             }
         });
     }
@@ -119,12 +128,14 @@ public class Main {
     private static void inicializarPeoes(Jogador jogador, Tabuleiro tabuleiro) {
         for (int i = 0; i < 4; i++) {
             Peao peao = new Peao();
+        
             peao.setCorPeao(jogador.getCor()); // Define a cor do peão
+            peao.setIndice(i); // Define o índice do peão
             jogador.adicionarPeao(peao);
             // Defina a posição inicial do peão na base
             peao.setPosicaoInicial(jogador.getCor(), i);
             // Posiciona o peão no tabuleiro
-            tabuleiro.posicionarPeao(peao);
+            tabuleiro.posicionarPeao(peao, i);
         }
     }
 
@@ -132,7 +143,7 @@ public class Main {
         tabuleiro.limparTabuleiro(); // Limpa o tabuleiro antes de reposicionar os peões
         for (Jogador jogador : jogadores) {
             for (Peao peao : jogador.getListaPeoes()) {
-                tabuleiro.posicionarPeao(peao);
+                tabuleiro.posicionarPeao(peao, 1);
             }
         }
         

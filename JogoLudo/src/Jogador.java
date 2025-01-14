@@ -48,6 +48,9 @@ public class Jogador {
         listaPeoes.add(peao);
     }
     
+    public void jogar(){
+        // Implementado nas subclasses
+    }
 
     // IMPLEMENTAR FUNÇÃO JOGAR
 

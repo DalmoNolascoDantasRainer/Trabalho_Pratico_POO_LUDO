@@ -1,17 +1,25 @@
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Tabuleiro {
     private JPanel painelTabuleiro;
     private ArrayList<Casa> listaCasas;
-    private ArrayList<CasaFinal> listaTrilhasFinais;
+    private ArrayList<CasaFinal> trilhaFinalAmarelo;
+    private ArrayList<CasaFinal> trilhaFinalAzul;
+    private ArrayList<CasaFinal> trilhaFinalVerde;
+    private ArrayList<CasaFinal> trilhaFinalVermelho;
     private int[] caminho;
 
 
     public Tabuleiro() {
         listaCasas = new ArrayList<>();
-        listaTrilhasFinais = new ArrayList<>();
+        trilhaFinalAmarelo = new ArrayList<>();
+        trilhaFinalAzul = new ArrayList<>();
+        trilhaFinalVerde = new ArrayList<>();
+        trilhaFinalVermelho = new ArrayList<>();
         inicializarInterface();
         inicializaTabuleiro();
         InicializaTrilhasFinais();
@@ -74,13 +82,13 @@ public class Tabuleiro {
         int[] trilhaFinalAzul = {118, 117, 116, 115, 114, 113};
         int[] trilhaFinalVerde = {22, 37, 52, 67, 82, 97};
 
-        adicionarTrilhaFinal(trilhaFinalVermelho);
-        adicionarTrilhaFinal(trilhaFinalAmarelo);
-        adicionarTrilhaFinal(trilhaFinalAzul);
-        adicionarTrilhaFinal(trilhaFinalVerde);
+        adicionarTrilhaFinal(trilhaFinalVermelho, this.trilhaFinalVermelho);
+        adicionarTrilhaFinal(trilhaFinalAmarelo, this.trilhaFinalAmarelo);
+        adicionarTrilhaFinal(trilhaFinalAzul, this.trilhaFinalAzul);
+        adicionarTrilhaFinal(trilhaFinalVerde, this.trilhaFinalVerde);
     }
 
-    public void adicionarTrilhaFinal(int[] trilhaFinal){
+    public void adicionarTrilhaFinal(int[] trilhaFinal, ArrayList<CasaFinal> listaTrilhasFinais) {
         for (int i = 0; i < trilhaFinal.length; i++) {
             int posicao = trilhaFinal[i];
             listaTrilhasFinais.add(new CasaFinal(posicao));  // Adiciona a casa na lista
@@ -98,12 +106,12 @@ public class Tabuleiro {
         }
     }
 
-    public void posicionarPeao(Peao peao) {
+    public void posicionarPeao(Peao peao, int indice) {
 
         int posicaoAtual = peao.getPosicaoAtual();
         if (posicaoAtual >= 0 && posicaoAtual < 15 * 15) {
             JButton botao = (JButton) painelTabuleiro.getComponent(posicaoAtual);
-            botao.setText(peao.getCorPeao().name().substring(0, 1)); // Exibe a inicial da cor do peão
+            botao.setText(""+peao.getIndice()); // Exibe a inicial da cor do peão
     
             // Define a cor do botão com base na cor do peão
             switch (peao.getCorPeao()) {
@@ -127,21 +135,38 @@ public class Tabuleiro {
         return listaCasas;
     }
 
-    public ArrayList<CasaFinal> getListaTrilhasFinais() {
-        return listaTrilhasFinais;
+    public ArrayList<CasaFinal> getTrilhaFinalAmarelo() {
+        return trilhaFinalAmarelo;
     }
+
+    public ArrayList<CasaFinal> getTrilhaFinalAzul() {
+        return trilhaFinalAzul;
+    }
+
+    public ArrayList<CasaFinal> getTrilhaFinalVerde() {
+        return trilhaFinalVerde;
+    }
+
+    public ArrayList<CasaFinal> getTrilhaFinalVermelho() {
+        return trilhaFinalVermelho;
+    }   
+    
 
     public void atualizarPosicaoPeao(Peao peao, int antigaPosicao) {
         // Limpa a posição antiga do peão e come os peoes na casade destino
         int novaPosicao = peao.getPosicaoAtual();
+        System.out.println("Atualizando posição do peão. Antiga posição: " + antigaPosicao + ", Nova posição: " + novaPosicao);
         if (antigaPosicao >= 0 && antigaPosicao < 15 * 15) {
             for (int j = 0; j < caminho.length; j++){
                 if (caminho[j] == novaPosicao){
-                    for (Peao peaoAdversario : listaCasas.get(j).getListaPeoes()){
-                        if (peaoAdversario.getCorPeao() != peao.getCorPeao()){
+                    // Use um iterador para evitar ConcurrentModificationException
+                    Iterator<Peao> iterator = listaCasas.get(j).getListaPeoes().iterator();
+                    while (iterator.hasNext()) {
+                        Peao peaoAdversario = iterator.next();
+                        if (peaoAdversario.getCorPeao() != peao.getCorPeao()) {
                             peaoAdversario.retornarBase();
-                            listaCasas.get(j).removerPeca(peaoAdversario);
-
+                            iterator.remove(); // Remove o peão adversário da lista
+                            System.out.println("Peão adversário retornado para a base");
                         }
                     }
                 }
@@ -149,7 +174,12 @@ public class Tabuleiro {
             if(antigaPosicao == 7 || antigaPosicao == 119 || antigaPosicao == 217 || antigaPosicao == 105){
                 JButton botaoAtual = (JButton) painelTabuleiro.getComponent(antigaPosicao);
                 botaoAtual.setBackground(Color.GRAY);
-            } else {
+            } 
+            else if(antigaPosicao == 202 || antigaPosicao == 187 || antigaPosicao == 172 || antigaPosicao == 157 || antigaPosicao == 142){
+                JButton botaoAtual = (JButton) painelTabuleiro.getComponent(antigaPosicao);
+                botaoAtual.setBackground(Color.WHITE);
+            }
+            else {
                 JButton botaoAtual = (JButton) painelTabuleiro.getComponent(antigaPosicao);
                 botaoAtual.setText("");
                 botaoAtual.setBackground(Color.LIGHT_GRAY);
