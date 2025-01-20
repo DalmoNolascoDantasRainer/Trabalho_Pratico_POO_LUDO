@@ -67,6 +67,24 @@ public class JogadorAzul extends Jogador {
             }
         }
         
+        for (Casa casa : tabuleiro.getListaCasas()) {
+            if (casa.getPosicao() == peao.getPosicaoAtual()){
+                casa.adicionarPeca(peao);
+                
+            }
+            else if (casa.getPosicao() == posicaoAnterior){
+                casa.removerPeca(peao);
+            }
+        }
+        for (Casa casa : tabuleiro.getTrilhaFinalAzul()){
+            if (casa.getPosicao() == peao.getPosicaoAtual()){
+                
+                casa.adicionarPeca(peao);
+            }
+            else if (casa.getPosicao() == posicaoAnterior){
+                casa.removerPeca(peao);
+            }
+        }
     
         tabuleiro.atualizarPosicaoPeao(peao, posicaoAnterior);
         System.out.println("Posição final do peão: " + peao.getPosicaoAtual());

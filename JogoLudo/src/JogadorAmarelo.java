@@ -59,11 +59,30 @@ public class JogadorAmarelo extends Jogador {
                     if(tabuleiro.getTrilhaFinalAmarelo().get(i).podeAndar(dado, trilhaFinalAmarelo)){
                         peao.setPosicaoAtual(tabuleiro.getTrilhaFinalAmarelo().get(i + dado).getPosicao());
                         break;
-                    }
+                     }
                     else{
                         //Realizar o tratamento de exceção
                     }
                 }
+            }
+        }
+
+        for (Casa casa : tabuleiro.getListaCasas()) {
+            if (casa.getPosicao() == peao.getPosicaoAtual()){
+                casa.adicionarPeca(peao);
+                
+            }
+            else if (casa.getPosicao() == posicaoAnterior){
+                casa.removerPeca(peao);
+            }
+        }
+        for (Casa casa : tabuleiro.getTrilhaFinalAmarelo()){
+            if (casa.getPosicao() == peao.getPosicaoAtual()){
+                
+                casa.adicionarPeca(peao);
+            }
+            else if (casa.getPosicao() == posicaoAnterior){
+                casa.removerPeca(peao);
             }
         }
         
