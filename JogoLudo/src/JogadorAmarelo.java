@@ -66,6 +66,25 @@ public class JogadorAmarelo extends Jogador {
                 }
             }
         }
+
+        for (Casa casa : tabuleiro.getListaCasas()) {
+            if (casa.getPosicao() == peao.getPosicaoAtual()){
+                casa.adicionarPeca(peao);
+                
+            }
+            else if (casa.getPosicao() == posicaoAnterior){
+                casa.removerPeca(peao);
+            }
+        }
+        for (Casa casa : tabuleiro.getTrilhaFinalAmarelo()){
+            if (casa.getPosicao() == peao.getPosicaoAtual()){
+                
+                casa.adicionarPeca(peao);
+            }
+            else if (casa.getPosicao() == posicaoAnterior){
+                casa.removerPeca(peao);
+            }
+        }
         
     
         tabuleiro.atualizarPosicaoPeao(peao, posicaoAnterior);

@@ -159,24 +159,7 @@ public class Tabuleiro {
     public void atualizarPosicaoPeao(Peao peao, int antigaPosicao) {
         // Limpa a posição antiga do peão e come os peoes na casade destino
         int novaPosicao = peao.getPosicaoAtual();
-        for (Casa casa : this.getListaCasas()) {
-            if (casa.getPosicao() == peao.getPosicaoAtual()){
-                casa.adicionarPeca(peao);
-                
-            }
-            else if (casa.getPosicao() == antigaPosicao){
-                casa.removerPeca(peao);
-            }
-        }
-        for (Casa casa : this.getTrilhaFinalAmarelo()){
-            if (casa.getPosicao() == peao.getPosicaoAtual()){
-                
-                casa.adicionarPeca(peao);
-            }
-            else if (casa.getPosicao() == antigaPosicao){
-                casa.removerPeca(peao);
-            }
-        }
+        
         System.out.println("Atualizando posição do peão. Antiga posição: " + antigaPosicao + ", Nova posição: " + novaPosicao);
         if (antigaPosicao >= 0 && antigaPosicao < 15 * 15) {
             for (int j = 0; j < caminho.length; j++){
