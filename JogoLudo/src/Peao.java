@@ -4,8 +4,8 @@
 valor da posição quando esta na base = -1
 */
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 public class Peao {
     private int posicaoAtual;
