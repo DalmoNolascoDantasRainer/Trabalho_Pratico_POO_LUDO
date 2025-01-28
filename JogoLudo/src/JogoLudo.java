@@ -100,50 +100,72 @@ public class JogoLudo {
         panel.add(efetivarAcaoButton);
         efetivarAcaoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
-                
-                
-                int peaoEscolhido = (int) peaoComboBox.getSelectedItem();
-                Peao peaoAtual = jogadorAtual.getListaPeoes().get(peaoEscolhido);
-                int posicaoAnterior = peaoAtual.getPosicaoAtual();
+                try {
+                    if(resultadoDado != 0){
+                         int peaoEscolhido = (int) peaoComboBox.getSelectedItem();
+                    
+                        Peao peaoAtual = jogadorAtual.getListaPeoes().get(peaoEscolhido);
 
-                System.out.println("Peão escolhido: " + peaoEscolhido); // Depuração
-                System.out.println("Chamando jogadorAtual.jogar"); // Depuração
-                System.out.println("Tipo de jogadorAtual: " + jogadorAtual.getClass().getName()); // Depuração
-                jogadorAtual.jogar(resultadoDado, peaoEscolhido);
-                switch (jogadorAtual.getClass().getName()) {
-                    case "JogadorAmarelo":
-                        if(peaoAtual.getPosicaoAtual() == 127 && posicaoAnterior != 127){
-                            jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+                        // Verifica se todos os peões estão na base
+                        boolean todosNaBase = true;
+                        for (Peao peao : jogadorAtual.getListaPeoes()) {
+                            if (!peao.isEstaNaBase()) {
+                                todosNaBase = false;
+                                break;
+                            }
                         }
-                        break;
-                    case "JogadorAzul":
-                        if(peaoAtual.getPosicaoAtual() == 113 && posicaoAnterior != 113){
-                            jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+
+                        // Verifica se o peão está dentro do tabuleiro
+                        if (peaoAtual.isEstaNaBase() && resultadoDado!=6 && !todosNaBase) {
+                            throw new IllegalArgumentException("Peão fora do tabuleiro, e numero do dado diferente de 6");
                         }
-                        break;
-                    case "JogadorVerde":
-                        if(peaoAtual.getPosicaoAtual() == 97 && posicaoAnterior != 97){
-                            jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
-                        }
-                        break;
-                    case "JogadorVermelho":
-                        if(peaoAtual.getPosicaoAtual() == 111 && posicaoAnterior != 111){
-                            jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                resultadoDado = 0;
-                atualizarTabuleiro(tabuleiro, jogadorAmarelo, jogadorAzul, jogadorVerde, jogadorVermelho);
-                if(jogadorAtual.getPecasChegada() == 4){
-                    JOptionPane.showMessageDialog(null, "O jogador " + jogadorAtual.getNome() + " venceu!");
-                }
-                
-                
-            }
             
+                        int posicaoAnterior = peaoAtual.getPosicaoAtual();
+            
+                        System.out.println("Peão escolhido: " + peaoEscolhido); // Depuração
+                        System.out.println("Chamando jogadorAtual.jogar"); // Depuração
+                        System.out.println("Tipo de jogadorAtual: " + jogadorAtual.getClass().getName()); // Depuração
+                        
+                        jogadorAtual.jogar(resultadoDado, peaoEscolhido);
+                        
+                        switch (jogadorAtual.getClass().getName()) {
+                            case "JogadorAmarelo":
+                                if(peaoAtual.getPosicaoAtual() == 127 && posicaoAnterior != 127){
+                                    jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+                                }
+                                break;
+                            case "JogadorAzul":
+                                if(peaoAtual.getPosicaoAtual() == 113 && posicaoAnterior != 113){
+                                    jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+                                }
+                                break;
+                            case "JogadorVerde":
+                                if(peaoAtual.getPosicaoAtual() == 97 && posicaoAnterior != 97){
+                                    jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+                                }
+                                break;
+                            case "JogadorVermelho":
+                                if(peaoAtual.getPosicaoAtual() == 111 && posicaoAnterior != 111){
+                                    jogadorAtual.setPeoesChegada(jogadorAtual.getPecasChegada() + 1);
+                                }
+                                break;
+                            }
+                            
+                        resultadoDado = 0;
+                        atualizarTabuleiro(tabuleiro, jogadorAmarelo, jogadorAzul, jogadorVerde, jogadorVermelho);
+                        
+                        if(jogadorAtual.getPecasChegada() == 4){
+                            JOptionPane.showMessageDialog(null, "O jogador " + jogadorAtual.getNome() + " venceu!");
+                        }
+                    }
+                   
+                    
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(null, "Peão fora do tabuleiro. Escolha outro peão.");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro inesperado: " + ex.getMessage());
+                }
+            }
         });
     }
 

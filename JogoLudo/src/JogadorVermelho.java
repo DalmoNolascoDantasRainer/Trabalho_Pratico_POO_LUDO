@@ -61,9 +61,6 @@ public class JogadorVermelho extends Jogador {
                         peao.setPosicaoAtual(tabuleiro.getTrilhaFinalVermelho().get(i + dado).getPosicao());
                         break;
                     }
-                    else{
-                        //Realizar o tratamento de exceção
-                    }
                 }
             }
         }

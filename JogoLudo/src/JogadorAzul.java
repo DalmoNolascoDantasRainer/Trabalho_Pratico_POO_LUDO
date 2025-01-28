@@ -60,9 +60,6 @@ public class JogadorAzul extends Jogador {
                         peao.setPosicaoAtual(tabuleiro.getTrilhaFinalAzul().get(i + dado).getPosicao());
                         break;
                     }
-                    else{
-                        //Realizar o tratamento de exceção
-                    }
                 }
             }
         }

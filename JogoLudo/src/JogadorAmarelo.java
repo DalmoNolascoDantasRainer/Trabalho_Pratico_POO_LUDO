@@ -53,15 +53,12 @@ public class JogadorAmarelo extends Jogador {
                 }
             }
         }
-        else{//Realizar o tratamento de exceção
+        else{
             for(int i = 0; i < tabuleiro.getTrilhaFinalAmarelo().size(); i++){
                 if(tabuleiro.getTrilhaFinalAmarelo().get(i).getPosicao() == peao.getPosicaoAtual()){
                     if(tabuleiro.getTrilhaFinalAmarelo().get(i).podeAndar(dado, trilhaFinalAmarelo)){
                         peao.setPosicaoAtual(tabuleiro.getTrilhaFinalAmarelo().get(i + dado).getPosicao());
                         break;
-                    }
-                    else{
-                        //Realizar o tratamento de exceção
                     }
                 }
             }
