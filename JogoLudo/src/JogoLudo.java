@@ -117,7 +117,7 @@ public class JogoLudo {
 
                         // Verifica se o peão está dentro do tabuleiro
                         if (peaoAtual.isEstaNaBase() && resultadoDado!=6 && !todosNaBase) {
-                            throw new IllegalArgumentException("Peão fora do tabuleiro, e numero do dado diferente de 6");
+                            throw new IllegalArgumentException("Peão fora do tabuleiro. Escolha outro peão.");
                         }
             
                         int posicaoAnterior = peaoAtual.getPosicaoAtual();
@@ -161,7 +161,7 @@ public class JogoLudo {
                    
                     
                 } catch (IllegalArgumentException ex) {
-                    JOptionPane.showMessageDialog(null, "Peão fora do tabuleiro. Escolha outro peão.");
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Erro inesperado: " + ex.getMessage());
                 }
