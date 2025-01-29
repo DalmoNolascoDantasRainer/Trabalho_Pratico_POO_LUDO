@@ -1,18 +1,18 @@
+import java.awt.Color;
 
 public enum Cor {
-    VERMELHO("Vermelho"), 
-    AMARELO("Amarelo"), 
-    VERDE("Verde"), 
-    AZUL("Azul");
+    AMARELO(Color.YELLOW),
+    AZUL(Color.BLUE),
+    VERDE(Color.GREEN),
+    VERMELHO(Color.RED);
 
-    private String cor;
+    private final Color cor;
 
-    Cor(String cor){
+    Cor(Color cor) {
         this.cor = cor;
     }
 
-    public String getCor(){
+    public Color getCorOriginal() {
         return this.cor;
     }
-
 }
